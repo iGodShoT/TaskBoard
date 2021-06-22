@@ -1,0 +1,63 @@
+﻿<Window x:Class="ToDoApp.Registration"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        mc:Ignorable="d"
+        Title="Регистрация" Height="1080" Width="1920" WindowStartupLocation="CenterScreen" WindowState="Maximized">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0" Grid.Column="1" VerticalAlignment="Bottom">
+            <StackPanel Orientation="Vertical">
+                <Image Source="Images/free-icon-registration-form-2718413.png" Height="300" Width="300"
+                       VerticalAlignment="Top" />
+                <StackPanel Orientation="Vertical">
+                    <TextBox x:Name="Name" MaxLength="30" FontFamily="TeX Gyre Adventor"
+                             Style="{StaticResource MaterialDesignTextBox}" Height="35" FontSize="15" />
+                    <TextBox x:Name="Surname" MaxLength="30"
+                             FontFamily="TeX Gyre Adventor" Style="{StaticResource MaterialDesignTextBox}" Height="35"
+                             FontSize="15" />
+                </StackPanel>
+            </StackPanel>
+        </Grid>
+        <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Vertical">
+            <TextBox x:Name="Login" MaxLength="30" FontFamily="TeX Gyre Adventor"
+                     Style="{StaticResource MaterialDesignTextBox}" Height="35" VerticalAlignment="Top" FontSize="15" />
+            <PasswordBox x:Name="Password" MaxLength="30" FontFamily="TeX Gyre Adventor"
+                         Style="{StaticResource MaterialDesignPasswordBox}" Height="35" VerticalAlignment="Top"
+                         FontSize="15" />
+            <Button x:Name="LoginButton" Content="Применить" Style="{StaticResource MaterialDesignFlatAccentBgButton}"
+                    Background="#FFF2AC26" BorderBrush="#FFF2AC26" Foreground="#DDFFFFFF" Margin="0,90,0,0"
+                    Click="LoginButton_Click" />
+            <Button Content="Назад" Background="#FFF2AC26" BorderBrush="#FFF2AC26" Foreground="#DDFFFFFF" Width="100"
+                    Margin="0,40,0,0" Click="Button_Click" />
+        </StackPanel>
+        <Grid Grid.Row="0" Grid.Column="0" VerticalAlignment="Bottom" Margin="0,0,8,-5">
+            <StackPanel Orientation="Vertical">
+                <TextBlock Height="35" FontSize="14" Text="Имя" FontFamily="TeX Gyre Adventor"
+                           HorizontalAlignment="Right" />
+                <TextBlock Height="35" FontSize="14" Text="Фамилия" FontFamily="TeX Gyre Adventor"
+                           HorizontalAlignment="Right" />
+            </StackPanel>
+        </Grid>
+        <Grid Grid.Row="1" Grid.Column="0" VerticalAlignment="Top" Margin="0,5,8,0">
+            <StackPanel Orientation="Vertical">
+                <TextBlock Height="35" FontSize="14" Text="Логин" FontFamily="TeX Gyre Adventor"
+                           HorizontalAlignment="Right" />
+                <TextBlock Height="35" FontSize="14" Text="Пароль" FontFamily="TeX Gyre Adventor"
+                           HorizontalAlignment="Right" />
+            </StackPanel>
+        </Grid>
+        <materialDesign:Snackbar x:Name="SnackbarOne" MessageQueue="{materialDesign:MessageQueue}" IsActive="False"
+                                 Grid.Column="0" Grid.Row="1" HorizontalAlignment="Center" Grid.ColumnSpan="3" />
+    </Grid>
+</Window>

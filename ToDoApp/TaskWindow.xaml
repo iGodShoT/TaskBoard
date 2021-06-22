@@ -1,0 +1,122 @@
+﻿<UserControl x:Class="ToDoApp.TaskWindow"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:ToDoApp"
+             mc:Ignorable="d"
+             Background="#FFE2E2E2"
+             d:DesignHeight="300" d:DesignWidth="300"
+             AllowDrop="True">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0.25*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="0.15*" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition Width="0.2*" />
+        </Grid.ColumnDefinitions>
+        <TextBox x:Name="TableName" Grid.Row="0" Grid.ColumnSpan="2" Tag="New Table" FontFamily="TeX Gyre Adventor"
+                 FontSize="16" Foreground="Gray" HorizontalAlignment="Center" CaretBrush="Gray"
+                 LostFocus="TableName_Edit_OFF_OnLostFocus">
+            <TextBox.Style>
+                <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource {x:Type TextBox}}">
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="{x:Type TextBox}">
+                                <Border x:Name="border"
+                                        Padding="{TemplateBinding Padding}"
+                                        Background="{TemplateBinding Background}"
+                                        BorderBrush="{TemplateBinding BorderBrush}"
+                                        BorderThickness="{TemplateBinding BorderThickness}"
+                                        SnapsToDevicePixels="True">
+                                    <Grid>
+                                        <ScrollViewer x:Name="PART_ContentHost" />
+                                        <TextBlock x:Name="textBlock"
+                                                   Margin="2,0,0,0"
+                                                   Foreground="{TemplateBinding BorderBrush}"
+                                                   IsHitTestVisible="False"
+                                                   Text="{Binding Tag, RelativeSource={RelativeSource TemplatedParent}}"
+                                                   Visibility="Collapsed" />
+                                    </Grid>
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="Text" Value="">
+                                        <Setter TargetName="textBlock" Property="Visibility" Value="Visible" />
+                                    </Trigger>
+                                    <Trigger Property="IsEnabled" Value="False">
+                                        <Setter TargetName="border" Property="Opacity" Value="0.56" />
+                                    </Trigger>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter TargetName="border" Property="BorderBrush" Value="#FF7EB4EA" />
+                                    </Trigger>
+                                    <Trigger Property="IsKeyboardFocused" Value="True">
+                                        <Setter TargetName="border" Property="BorderBrush" Value="#FF569DE5" />
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </TextBox.Style>
+        </TextBox>
+        <ListView x:Name="ItemListView" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" ItemsSource="{Binding}"
+                  AllowDrop="True" Drop="ItemListView_Drop"
+                  MinHeight="100">
+            <ListView.ItemTemplate>
+                <DataTemplate DataType="local:Item">
+                    <Grid x:Name="ItemGrid">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+                        <TextBox Grid.Row="1" Tag="{Binding Path=Index}" Text="{Binding Path=Value, Mode=TwoWay}"
+                                 LostFocus="TextBox_LostFocus" KeyDown="TextBox_KeyDown" MinWidth="300">
+                            <TextBox.Style>
+                                <Style TargetType="{x:Type TextBox}">
+                                    <Setter Property="Visibility" Value="Collapsed" />
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding Path=Edit}" Value="True">
+                                            <Setter Property="Visibility" Value="Visible" />
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding Path=Edit}" Value="False">
+                                            <Setter Property="Visibility" Value="Collapsed" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBox.Style>
+                        </TextBox>
+                        <TextBlock Grid.Row="0" Tag="{Binding Path=Index}" Text="{Binding Path=Value, Mode=TwoWay}"
+                                   PreviewMouseUp="TextBlock_Edit_ON_OnPreviewMouseUp"
+                                   PreviewMouseDown="TextBlock_DragDrop_ON_OnPreviewMouseDown"
+                                   MinWidth="300">
+                            <TextBlock.Style>
+                                <Style TargetType="{x:Type TextBlock}">
+                                    <Setter Property="Visibility" Value="Collapsed" />
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding Path=Edit}" Value="True">
+                                            <Setter Property="Visibility" Value="Collapsed" />
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding Path=Edit}" Value="False">
+                                            <Setter Property="Visibility" Value="Visible" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style>
+                        </TextBlock>
+                    </Grid>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        <Button x:Name="AddTask" Content="Добавить задачу" HorizontalAlignment="Center" Grid.Row="2"
+                Grid.ColumnSpan="2" Width="250" Background="#FFE2E2E2" Foreground="Gray" BorderBrush="#FFE2E2E2"
+                Click="AddTask_Click" />
+        <Button x:Name="Close" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Right" Height="35" Width="45"
+                Content="X"
+                Style="{DynamicResource MaterialDesignFlatButton}" Foreground="Gray" Click="Close_Click"
+                VerticalAlignment="Top" />
+    </Grid>
+</UserControl>
